@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 14:49:24 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/08/04 20:22:06 by mnakasto         ###   ########.fr       */
+/*   Updated: 2025/08/06 20:10:40 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "libft/headers/libft.h"
 # include "libft/headers/get_next_line.h"
 # include "libft/headers/ft_printf.h"
-# include "libft/minilibx-linux/mlx.h"
-# include "libft/minilibx-linux/mlx_int.h"
+# include "mlx/mlx.h"
+# include "mlx/mlx_int.h"
 
 # define NB_TEX 5
 
