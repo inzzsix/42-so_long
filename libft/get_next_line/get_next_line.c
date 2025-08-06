@@ -6,11 +6,11 @@
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:51:59 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/03/05 16:40:39 by mnakasto         ###   ########.fr       */
+/*   Updated: 2025/04/04 11:06:11 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../headers/get_next_line.h"
 #include "../headers/libft.h"
 
 static char	*extract_remaining(char *line)

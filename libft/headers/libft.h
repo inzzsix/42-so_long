@@ -6,7 +6,7 @@
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 11:35:41 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/03/05 15:08:26 by mnakasto         ###   ########.fr       */
+/*   Updated: 2025/08/01 20:26:38 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include <stdio.h>
 # include <ctype.h>
 # include <stddef.h>
-
-
 
 int		ft_atoi(const char *nptr);
 int		ft_isalpha(int c);
@@ -53,9 +51,9 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s, char const *set);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
-void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_putendl_fd(char *s, int fd);
-void	ft_putnbr_fd(int n, int fd);
+int		ft_putchar_fd(char c, int fd);
+int		ft_putstr_fd(char *s, int fd);
+int		ft_putendl_fd(char *s, int fd);
+int		ft_putnbr_fd(int n, int fd);
 
 #endif

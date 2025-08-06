@@ -6,14 +6,14 @@
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:52:45 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/03/05 16:41:01 by mnakasto         ###   ########.fr       */
+/*   Updated: 2025/04/04 11:10:30 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../headers/get_next_line.h"
 #include "../headers/libft.h"
 
-int	ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
 	int	i;
 

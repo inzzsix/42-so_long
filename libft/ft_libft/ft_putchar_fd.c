@@ -6,7 +6,7 @@
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:07:52 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/04/03 19:38:23 by mnakasto         ###   ########.fr       */
+/*   Updated: 2025/08/01 20:23:54 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,4 +15,5 @@
 int	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
+	return (0);
 }

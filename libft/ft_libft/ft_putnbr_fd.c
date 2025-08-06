@@ -6,13 +6,13 @@
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:07:43 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/03/05 15:08:56 by mnakasto         ###   ########.fr       */
+/*   Updated: 2025/04/06 22:46:30 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+int	ft_putnbr_fd(int n, int fd)
 {
 	if (n == -2147483648)
 		ft_putstr_fd("-2147483648", fd);
@@ -30,4 +30,5 @@ void	ft_putnbr_fd(int n, int fd)
 		ft_putnbr_fd(n / 10, fd);
 		ft_putchar_fd((n % 10) + '0', fd);
 	}
+	return (0);
 }

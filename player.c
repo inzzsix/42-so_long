@@ -1,38 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_copy.c                                         :+:      :+:    :+:   */
+/*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 20:52:06 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/04/03 21:26:15 by mnakasto         ###   ########.fr       */
+/*   Created: 2025/04/03 21:27:05 by mnakasto          #+#    #+#             */
+/*   Updated: 2025/08/01 19:56:14 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char **copy_map(char **original)
+void	find_player(t_game *game)
 {
-	char	**copy;
-	int		height;
-	int		i;
-	
-	copy = NULL;
-	height = 0;
+	int	i;
+	int	j;
+
 	i = 0;
-	while (original[height])
-		height++;
-	copy = malloc(sizeof(char *) * (height + 1));
-	if (!copy)
-		return (NULL);
-	while (i < height)
+	while (i < game->height)
 	{
-		copy[i] = ft_strdup(original[i]);
-		if(!copy[i])
-			return (NULL);
-		i++;;
+		j = 0;
+		while (j < game->width)
+		{
+			if (game->map[i][j] == 'P')
+			{
+				game->player_x = i;
+				game->player_y = j;
+				return ;
+			}
+			j++;
+		}
+		i++;
 	}
-	copy[i] = NULL;
-	return (copy);
 }

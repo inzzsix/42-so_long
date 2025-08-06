@@ -6,13 +6,13 @@
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:42:13 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/03/05 15:10:03 by mnakasto         ###   ########.fr       */
+/*   Updated: 2025/04/04 10:19:54 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/libft.h"
 
-char	ft_toupper(int c)
+int	ft_toupper(int c)
 {
 	if (c >= 'a' && c <= 'z')
 	{

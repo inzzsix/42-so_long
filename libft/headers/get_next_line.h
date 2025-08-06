@@ -28,11 +28,7 @@ char	*get_next_line(int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s);
-<<<<<<< HEAD:libft/headers/get_next_line.h
 size_t	ft_strlen(const char *s);
-=======
-size_t		ft_strlen(const char *s);
->>>>>>> 523210be967e943887faa2e2113bfcdb1fa44047:so_long/libft/headers/get_next_line.h
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif

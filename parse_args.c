@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flood_fill.c                                       :+:      :+:    :+:   */
+/*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 21:27:05 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/04/03 21:50:06 by mnakasto         ###   ########.fr       */
+/*   Created: 2025/04/03 20:52:23 by mnakasto          #+#    #+#             */
+/*   Updated: 2025/08/04 19:36:38 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// find players position
+#include "so_long.h"
 
-void	find_player(char **map)
+int	parse_args(int ac, char **av)
 {
-	int	i;
-	int	j;
-	int	player_x;
-	int	player_y;
-
-	i = 0;
-	j = 0;
-	while (map[i])
+	if (ac != 2)
 	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == 'P')
-			{
-				player_x = i;
-				player_y = j;
-				return ;
-			}
-		j++;
-		}
-		i++;
+		ft_printf("Error\nUsage: %s <map.ber>\n", av[0]);
+		return (0);
 	}
+	if (!check_extension(av[1]))
+	{
+		ft_printf("Error\nInvalid file extension. Expected .ber\n");
+		return (0);
+	}
+	return (1);
 }
