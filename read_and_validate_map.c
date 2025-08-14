@@ -5,33 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 22:21:21 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/08/05 18:45:24 by mnakasto         ###   ########.fr       */
+/*   Created: 2025/08/14 16:24:42 by mnakasto          #+#    #+#             */
+/*   Updated: 2025/08/14 17:07:58 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+static int	read_map_loop(int fd, char **all_lines)
+{
+	char	*line;
+	char	*temp;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		temp = ft_strjoin(*all_lines, line);
+		free(*all_lines);
+		free(line);
+		if (!temp)
+			return (print_error("Error\nAlloc fail\n", NULL));
+		*all_lines = temp;
+		line = get_next_line(fd);
+	}
+	return (1);
+}
+
 static int	read_map(t_game *game, char *file)
 {
 	int		fd;
 	char	*all_lines;
-	char	*line;
-	char	*temp;
 
+	all_lines = ft_strdup("");
+	if (!all_lines)
+		return (print_error("Error\nAlloc fail\n", NULL));
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (print_error("Error\nInvalid file descriptor\n", NULL));
-	all_lines = ft_strdup("");
-	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		temp = ft_strjoin(all_lines, line);
-		free(all_lines);
-		all_lines = temp;
-		free(line);
-		line = get_next_line(fd);
-	}
+		return (free(all_lines),
+			print_error("Error\nInvalid file descriptor\n", NULL));
+	if (!read_map_loop(fd, &all_lines))
+		return (close(fd), free(all_lines),
+			print_error("Error\nAlloc fail\n", NULL));
 	close(fd);
 	game->map = ft_split(all_lines, '\n');
 	free(all_lines);
@@ -40,16 +54,49 @@ static int	read_map(t_game *game, char *file)
 	return (1);
 }
 
-static void	get_map_size(t_game *game)
+static int	is_exit_reachable(char **m, int i, int j)
+{
+	int	h;
+	int	w;
+
+	h = 0;
+	while (m[h])
+		h++;
+	if (!m[0])
+		return (0);
+	w = (int)ft_strlen(m[0]);
+	if (i > 0 && m[i - 1][j] == 'V')
+		return (1);
+	if (i + 1 < h && m[i + 1][j] == 'V')
+		return (1);
+	if (j > 0 && m[i][j - 1] == 'V')
+		return (1);
+	if (j + 1 < w && m[i][j + 1] == 'V')
+		return (1);
+	return (0);
+}
+
+int	check_map_exit(char **m)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (game->map[i])
+	while (m[i])
+	{
+		j = 0;
+		while (m[i][j])
+		{
+			if (m[i][j] == 'E' && !is_exit_reachable(m, i, j))
+			{
+				ft_printf("Error\nPlayer cannot reach the exit\n");
+				return (0);
+			}
+			j++;
+		}
 		i++;
-	game->height = i;
-	if (game->map[0])
-		game->width = ft_strlen(game->map[0]);
+	}
+	return (1);
 }
 
 int	read_and_validate_map(t_game *game, char *filename)
@@ -59,55 +106,18 @@ int	read_and_validate_map(t_game *game, char *filename)
 	if (!read_map(game, filename))
 		return (0);
 	get_map_size(game);
-	map_copy = copy_map(game);
-	if (!map_copy)
-		printf("map copy failed");
 	if (!check_rectangular(game))
 		return (print_error("Error\nMap is not rectangular\n", game->map));
 	if (!check_map_elements(game))
 		return (print_error("Error\nInvalid map elements\n", game->map));
 	if (!check_walls(game))
 		return (print_error("Error\nMissing walls\n", game->map));
+	map_copy = copy_map(game);
+	if (!map_copy)
+		return (print_error("Error\nMap copy failed\n", game->map));
 	flood_fill(game, map_copy, game->player_x, game->player_y);
-	check_map_exit(map_copy);
+	if (!check_map_exit(map_copy))
+		return (free_map(map_copy), 0);
 	free_map(map_copy);
 	return (1);
-}
-
-void	flood_fill(t_game *g, char **map, int x, int y)
-{
-	if (x < 0 || x >= g->width || y < 0 || y >= g->height
-		|| ft_strchr("1VE", map[y][x]))
-		return ;
-	map[y][x] = 'V';
-	flood_fill(g, map, x - 1, y);
-	flood_fill(g, map, x + 1, y);
-	flood_fill(g, map, x, y - 1);
-	flood_fill(g, map, x, y + 1);
-}
-
-void	check_map_exit(char **map_copy)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (map_copy[i])
-	{
-		j = 0;
-		while (map_copy[i][j])
-		{
-			if (map_copy[i][j] == 'E')
-			{
-				if (map_copy[i + 1][j] != 'V' && map_copy[i - 1][j] != 'V'
-					&& map_copy[i][j + 1] != 'V' && map_copy[i][j - 1] != 'V')
-				{
-					printf("error: player cannot reach the exit\n");
-					exit (1);
-				}
-			}
-			j++;
-		}
-		i++;
-	}
 }

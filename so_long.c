@@ -6,7 +6,7 @@
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:32:38 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/08/04 20:23:01 by mnakasto         ###   ########.fr       */
+/*   Updated: 2025/08/14 20:59:38 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,18 @@ int	main(int ac, char **av)
 	t_mlx	mlx_struct;
 
 	ft_bzero(&game, sizeof(t_game));
-	game.mlx_data = &mlx_struct;
-	if (!initialize_game(&game, ac, av))
-		return (1);
-	init_mlx(game.mlx_data, &game);
-	launch_mlx(game.mlx_data, &game);
-	free_map(game.map);
+	ft_bzero(&mlx_struct, sizeof(t_mlx));
+	if (ac == 2)
+	{
+		ft_bzero(&game, sizeof(t_game));
+		game.mlx_data = &mlx_struct;
+		if (!initialize_game(&game, ac, av))
+			cleanup_and_exit(&game, 1);
+		init_mlx(game.mlx_data, &game);
+		launch_mlx(game.mlx_data, &game);
+		cleanup_and_exit(&game, 0);
+	}
+	else
+		ft_printf("Error\nInvalid number of args");
 	return (0);
 }

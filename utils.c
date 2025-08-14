@@ -6,7 +6,7 @@
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 19:28:10 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/08/05 18:42:30 by mnakasto         ###   ########.fr       */
+/*   Updated: 2025/08/14 20:38:18 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@ char	**copy_map(t_game *game)
 	return (map_cpy);
 }
 
-int	print_error(char *message, char **map)
-{
-	ft_printf("%s", message);
-	if (map)
-		free_map(map);
-	exit(EXIT_FAILURE);
-	return (0);
-}
-
 void	free_map(char **map)
 {
 	int	i;
@@ -54,9 +45,48 @@ void	free_map(char **map)
 	free(map);
 }
 
-int	close_window(t_game *game)
+int	print_error(char *message, char **map)
 {
-	free_map(game->map);
-	exit(0);
+	ft_printf("%s", message);
+	if (map)
+		free_map(map);
 	return (0);
+}
+
+void	destroy_images(t_game *game)
+{
+	if (!game || !game->mlx_data || !game->mlx_data->mlx)
+		return ;
+	if (game->background)
+		mlx_destroy_image(game->mlx_data->mlx, game->background);
+	if (game->wall)
+		mlx_destroy_image(game->mlx_data->mlx, game->wall);
+	if (game->player)
+		mlx_destroy_image(game->mlx_data->mlx, game->player);
+	if (game->collec)
+		mlx_destroy_image(game->mlx_data->mlx, game->collec);
+	if (game->exit)
+		mlx_destroy_image(game->mlx_data->mlx, game->exit);
+	game->background = NULL;
+	game->wall = NULL;
+	game->player = NULL;
+	game->collec = NULL;
+	game->exit = NULL;
+}
+
+void	destroy_mlx(t_game *game)
+{
+	if (!game || !game->mlx_data)
+		return ;
+	if (game->mlx_data->mlx)
+	{
+		if (game->mlx_data->win)
+		{
+			mlx_destroy_window(game->mlx_data->mlx, game->mlx_data->win);
+			game->mlx_data->win = NULL;
+		}
+		mlx_destroy_display(game->mlx_data->mlx);
+		free(game->mlx_data->mlx);
+		game->mlx_data->mlx = NULL;
+	}
 }

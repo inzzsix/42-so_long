@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 14:49:24 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/08/06 20:10:40 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/08/14 20:13:06 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	move_player_down(t_game *game);
 void	init_mlx(t_mlx *mlx, t_game *game);
 void	launch_mlx(t_mlx *mlx, t_game *game);
 void	load_images(t_game *game);
-void	check_map_exit(char **map_copy);
 void	draw_background_at(t_game *game, int x, int y);
 void	draw_tile(t_game *game, int x, int y);
 void	render_frame_move(t_game *game);
@@ -92,4 +91,12 @@ int		read_and_validate_map(t_game *game, char *filename);
 void	init_paths(t_game *game);
 void	draw_map(t_game *g, int y, int x);
 void	load_textures(t_game *game);
+void	destroy_images(t_game *game);
+void	destroy_mlx(t_game *game);
+void	cleanup_and_exit(t_game *game, int status);
+int		check_map_exit(char **m);
+void	get_map_size(t_game *game);
+int		in_bounds(t_game *g, int x, int y);
+int		can_move_to(t_game *game, int new_x, int new_y);
+
 #endif

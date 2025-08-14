@@ -6,7 +6,7 @@
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:02:49 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/08/06 18:26:22 by mnakasto         ###   ########.fr       */
+/*   Updated: 2025/08/14 18:31:49 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,46 @@ static int	ft_count_word(char const *s, char sep)
 	return (j);
 }
 
-static char	*ft_cpy(char **res, const char *s, char sep)
+void	free_words(char **res, int n)
 {
-	int	len;
+	int	i;
 
+	i = 0;
+	while (i < n)
+	{
+		free(res[i]);
+		i++;
+	}
+	free(res);
+}
+
+int	ft_cpy(char **res, const char *s, char sep)
+{
+	int			i;
+	size_t		len;
+	const char	*start;
+
+	i = 0;
 	while (*s)
 	{
-		len = 0;
 		while (*s == sep && *s)
 			s++;
-		while (*s != sep && *s)
-		{
-			len++;
+		if (!*s)
+			break ;
+		start = s;
+		while (*s && *s != sep)
 			s++;
-		}
-		if (len > 0)
+		len = (size_t)(s - start);
+		res[i] = malloc(len + 1);
+		if (!res[i])
 		{
-			*res = malloc(len + 1);
-			if (*res == NULL)
-				return (NULL);
-			ft_strlcpy(*res, s - len, len + 1);
-			res++;
+			free_words(res, i);
+			return (0);
 		}
+		ft_strlcpy(res[i++], start, len + 1);
 	}
-	return (*res);
+	res[i] = NULL;
+	return (1);
 }
 
 char	**ft_split(char const *s, char c)
@@ -65,11 +81,11 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	mots = ft_count_word(s, c);
-	res = malloc(sizeof(char *) * (mots + 1));
+	res = (char **)malloc(sizeof(char *) * (mots + 1));
 	if (!res)
 		return (NULL);
-	res[mots] = NULL;
-	ft_cpy(res, s, c);
+	if (!ft_cpy(res, s, c))
+		return (NULL);
 	return (res);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:59:39 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/08/06 12:57:05 by mnakasto         ###   ########.fr       */
+/*   Updated: 2025/08/14 18:49:10 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,11 @@ void	load_textures(t_game *game)
 			"textures/collectible.xpm", &width, &height);
 	game->exit = mlx_xpm_file_to_image(game->mlx_data->mlx,
 			"textures/exit.xpm", &width, &height);
-	if (!game->background || !game->wall || !game->player || !game->collec
-		|| !game->exit)
+	if (!game->background || !game->collec || !game->player
+		|| !game->exit || !game->wall)
 	{
-		ft_printf("Error:\nxpm file is not available\n");
-		mlx_destroy_window(game->mlx_data->mlx, game->mlx_data->win);
-		mlx_destroy_display(game->mlx_data->mlx);
-		exit(EXIT_FAILURE);
+		ft_printf("Error:\n xpm file not found");
+		cleanup_and_exit(game, 1);
 	}
 }
 

@@ -5,138 +5,68 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/07 22:27:28 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/08/04 19:22:30 by mnakasto         ###   ########.fr       */
+/*   Created: 2025/08/14 18:02:48 by mnakasto          #+#    #+#             */
+/*   Updated: 2025/08/14 18:08:23 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	can_move_to(t_game *game, int new_x, int new_y)
+static void	do_move(t_game *g, int nx, int ny)
 {
-	int	target;
-	int	i;
+	int	ox;
+	int	oy;
 
-	i = 0;
-	target = game->map[new_y][new_x];
-	if (target == '1')
-		return (0);
-	if (target == 'C')
-	{
-		game->c_count--;
-		game->map[new_y][new_x] = '0';
-	}
-	if (target == 'E')
-	{
-		if (game->c_count > i)
-			return (0);
-		else
-			exit (EXIT_SUCCESS);
-	}
-	return (1);
+	ox = g->player_x;
+	oy = g->player_y;
+	g->prev_x = ox;
+	g->prev_y = oy;
+	g->map[oy][ox] = '0';
+	g->map[ny][nx] = 'P';
+	g->player_x = nx;
+	g->player_y = ny;
 }
 
-void	move_player_left(t_game *game)
+void	move_player_left(t_game *g)
 {
-	int	old_x;
-	int	old_y;
-	int	new_x;
-	int	new_y;
+	int	nx;
+	int	ny;
 
-	if (!can_move_to(game, game->player_x - 1, game->player_y))
-		return ;
-	old_x = game->player_x;
-	old_y = game->player_y;
-	new_x = old_x - 1;
-	new_y = old_y;
-	if (new_x < 0)
-		return ;
-	if (!can_move_to(game, new_x, new_y))
-		return ;
-	game->prev_x = old_x;
-	game->prev_y = old_y;
-	game->map[old_y][old_x] = '0';
-	game->map[new_y][new_x] = 'P';
-	game->player_x = new_x;
+	nx = g->player_x - 1;
+	ny = g->player_y;
+	if (can_move_to(g, nx, ny))
+		do_move(g, nx, ny);
 }
 
-void	move_player_right(t_game *game)
+void	move_player_right(t_game *g)
 {
-	int	old_x;
-	int	old_y;
-	int	new_x;
-	int	new_y;
+	int	nx;
+	int	ny;
 
-	if (!can_move_to(game, game->player_x + 1, game->player_y))
-		return ;
-	old_x = game->player_x;
-	old_y = game->player_y;
-	new_x = old_x + 1;
-	new_y = old_y;
-	if (new_x > game->width)
-		return ;
-	if (!can_move_to(game, new_x, new_y))
-		return ;
-	game->prev_x = old_x;
-	game->prev_y = old_y;
-	if (game->map[game->player_y][new_x] != '1')
-	{
-		game->map[old_y][old_x] = '0';
-		game->map[new_y][new_x] = 'P';
-		game->player_x = new_x;
-	}
+	nx = g->player_x + 1;
+	ny = g->player_y;
+	if (can_move_to(g, nx, ny))
+		do_move(g, nx, ny);
 }
 
-void	move_player_up(t_game *game)
+void	move_player_up(t_game *g)
 {
-	int	old_x;
-	int	old_y;
-	int	new_x;
-	int	new_y;
+	int	nx;
+	int	ny;
 
-	if (!can_move_to(game, game->player_x, game->player_y - 1))
-		return ;
-	old_x = game->player_x;
-	old_y = game->player_y;
-	new_x = old_x;
-	new_y = old_y - 1;
-	if (new_y < 0)
-		return ;
-	if (!can_move_to(game, new_x, new_y))
-		return ;
-	game->prev_x = old_x;
-	game->prev_y = old_y;
-	if (game->map[game->player_y][new_x] != '1')
-	{
-		game->map[old_y][old_x] = '0';
-		game->map[new_y][new_x] = 'P';
-		game->player_y = new_y;
-	}
+	nx = g->player_x;
+	ny = g->player_y - 1;
+	if (can_move_to(g, nx, ny))
+		do_move(g, nx, ny);
 }
 
-void	move_player_down(t_game *game)
+void	move_player_down(t_game *g)
 {
-	int	old_x;
-	int	old_y;
-	int	new_x;
-	int	new_y;
+	int	nx;
+	int	ny;
 
-	if (!can_move_to(game, game->player_x, game->player_y + 1))
-		return ;
-	old_x = game->player_x;
-	old_y = game->player_y;
-	new_x = old_x;
-	new_y = old_y + 1;
-	if (new_y > game->height)
-		return ;
-	if (!can_move_to(game, new_x, new_y))
-		return ;
-	game->prev_x = old_x;
-	game->prev_y = old_y;
-	if (game->map[game->player_y][new_x] != '1')
-	{
-		game->map[old_y][old_x] = '0';
-		game->map[new_y][new_x] = 'P';
-		game->player_y = new_y;
-	}
+	nx = g->player_x;
+	ny = g->player_y + 1;
+	if (can_move_to(g, nx, ny))
+		do_move(g, nx, ny);
 }

@@ -1,9 +1,8 @@
-
-SRCS = checks.c hooks.c init_and_launch_mlx.c parse_args.c player_moves.c player.c read_and_validate_map.c render.c so_long.c utils.c
+SRCS = checks.c hooks.c init_and_launch_mlx.c utils2.c player_moves.c player.c read_and_validate_map.c render.c so_long.c utils.c
 OBJS = ${SRCS:.c=.o}
 NAME = so_long
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror
 MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit
 RM = rm -rf
 LIBFT = ./libft

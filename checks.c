@@ -6,7 +6,7 @@
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 20:37:48 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/08/06 18:44:10 by mnakasto         ###   ########.fr       */
+/*   Updated: 2025/08/10 12:33:34 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	check_map_elements(t_game *game)
 		}
 		i++;
 	}
-	if (game->p_count != 1 || game->e_count < 1 || game->c_count < 1)
+	if (game->p_count != 1 || game->e_count != 1 || game->c_count < 1)
 		return (0);
 	return (1);
 }

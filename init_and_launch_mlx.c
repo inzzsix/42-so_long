@@ -6,7 +6,7 @@
 /*   By: mnakasto <mnakasto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:44:25 by mnakasto          #+#    #+#             */
-/*   Updated: 2025/08/04 20:41:29 by mnakasto         ###   ########.fr       */
+/*   Updated: 2025/08/14 18:02:18 by mnakasto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ void	init_mlx(t_mlx *mlx, t_game *game)
 	mlx->mlx = mlx_init();
 	if (!mlx->mlx)
 	{
-		print_error("Error\nMLX initialization failed\n", game->map);
-		exit(EXIT_FAILURE);
+		ft_printf("Error\nMLX initialization failed\n");
+		cleanup_and_exit(game, EXIT_FAILURE);
 	}
 	x_len = game->width * 64;
 	y_len = game->height * 64;
 	mlx->win = mlx_new_window(mlx->mlx, x_len, y_len, "So_long");
 	if (!mlx->win)
 	{
-		print_error("Error\nWindow creation failed\n", game->map);
-		exit(EXIT_FAILURE);
+		ft_printf("Error\nWindow creation failed\n");
+		cleanup_and_exit(game, EXIT_FAILURE);
 	}
 }
 
